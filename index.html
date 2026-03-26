@@ -36,6 +36,130 @@
       transform: translateY(0);
     }
 
+    /* Tabs */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      background: rgba(0,0,0,0.04);
+      border-radius: 12px;
+      padding: 4px;
+      max-width: 400px;
+      margin: 0 auto 48px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 20px;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #86868b;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: #ffffff;
+      color: #1d1d1f;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0.5px 1px rgba(0,0,0,0.04);
+    }
+    .tab-btn:hover:not(.active) {
+      color: #1d1d1f;
+    }
+    .tab-content {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Blueprint card */
+    .blueprint-card {
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.03);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .blueprint-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .blueprint-info {
+      padding: 32px;
+    }
+    .blueprint-info h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1d1d1f;
+      margin-bottom: 16px;
+    }
+    .blueprint-info ul {
+      list-style: none;
+      padding: 0;
+      columns: 2;
+      column-gap: 24px;
+    }
+    @media (max-width: 640px) {
+      .blueprint-info ul { columns: 1; }
+    }
+    .blueprint-info li {
+      font-size: 14px;
+      color: #6e6e73;
+      font-weight: 300;
+      padding: 4px 0;
+      break-inside: avoid;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .blueprint-info li::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #0071e3;
+      flex-shrink: 0;
+      position: relative;
+      top: -2px;
+    }
+
+    /* Tech specs */
+    .tech-specs {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .tech-spec {
+      text-align: center;
+    }
+    .tech-spec .value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1d1d1f;
+      letter-spacing: -0.02em;
+    }
+    .tech-spec .label {
+      font-size: 12px;
+      color: #86868b;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
     /* Slider */
     .slider-container {
       position: relative;
@@ -120,7 +244,7 @@
 <body>
 
   <!-- Header -->
-  <header class="text-center pt-20 pb-16 px-6">
+  <header class="text-center pt-20 pb-8 px-6">
     <div class="fade-in">
       <span class="inline-block text-[11px] font-semibold tracking-[0.08em] uppercase text-apple-muted border border-gray-300 rounded-full px-4 py-1.5 mb-6">Powered by AI</span>
       <h1 class="text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight tracking-tight text-[#1d1d1f] max-w-3xl mx-auto">Renderização 3D com<br>Inteligência Artificial</h1>
@@ -128,100 +252,224 @@
     </div>
   </header>
 
-  <!-- Seção 1: Cozinha Gourmet -->
-  <section class="py-16 px-6">
-    <div class="fade-in text-center mb-8">
-      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Cozinha Gourmet</h2>
-      <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
+  <!-- Tab Navigation -->
+  <div class="px-6 pb-4">
+    <div class="tab-nav fade-in">
+      <button class="tab-btn active" data-tab="render3d">Renderização 3D</button>
+      <button class="tab-btn" data-tab="projeto2d">Projeto 2D</button>
     </div>
-    <div class="fade-in">
-      <div class="slider-container" data-slider>
-        <img src="original-01.jpg" alt="Projeto Cozinha" draggable="false">
-        <div class="slider-after"><img src="render-01-cozinha.png" alt="Render Cozinha" draggable="false"></div>
-        <div class="slider-line"></div>
-        <div class="slider-handle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
-        </div>
-        <span class="slider-label slider-label-before">Projeto</span>
-        <span class="slider-label slider-label-after">Render</span>
-      </div>
-    </div>
-  </section>
+  </div>
 
-  <!-- Seção 2: Sala de TV -->
-  <section class="py-16 px-6">
-    <div class="fade-in text-center mb-8">
-      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Sala de TV</h2>
-      <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
-    </div>
-    <div class="fade-in">
-      <div class="slider-container" data-slider>
-        <img src="original-02.jpg" alt="Projeto Sala de TV" draggable="false">
-        <div class="slider-after"><img src="render-02-sala-tv.png" alt="Render Sala de TV" draggable="false"></div>
-        <div class="slider-line"></div>
-        <div class="slider-handle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
-        </div>
-        <span class="slider-label slider-label-before">Projeto</span>
-        <span class="slider-label slider-label-after">Render</span>
-      </div>
-    </div>
-  </section>
+  <!-- TAB 1: Renderização 3D -->
+  <div id="tab-render3d" class="tab-content active">
 
-  <!-- Seção 3: Sala de Jantar -->
-  <section class="py-16 px-6">
-    <div class="fade-in text-center mb-8">
-      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Sala de Jantar</h2>
-      <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
-    </div>
-    <div class="fade-in">
-      <div class="slider-container" data-slider>
-        <img src="original-03.jpg" alt="Projeto Sala de Jantar" draggable="false">
-        <div class="slider-after"><img src="render-03-sala-jantar.png" alt="Render Sala de Jantar" draggable="false"></div>
-        <div class="slider-line"></div>
-        <div class="slider-handle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
-        </div>
-        <span class="slider-label slider-label-before">Projeto</span>
-        <span class="slider-label slider-label-after">Render</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Seção Explicativa -->
-  <section class="py-20 px-6 bg-white">
-    <div class="max-w-4xl mx-auto">
-      <div class="fade-in text-center mb-14">
-        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Como funciona</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
-        <div class="fade-in text-center p-8">
-          <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
-            <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
-          </div>
-          <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">Projeto SketchUp</h3>
-          <p class="text-sm text-apple-muted font-light">Upload das imagens</p>
-        </div>
-        <div class="fade-in text-center p-8" style="transition-delay:0.1s">
-          <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
-            <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-          </div>
-          <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">IA Gemini 3 Pro</h3>
-          <p class="text-sm text-apple-muted font-light">Renderização automática</p>
-        </div>
-        <div class="fade-in text-center p-8" style="transition-delay:0.2s">
-          <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
-            <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg>
-          </div>
-          <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">Resultado</h3>
-          <p class="text-sm text-apple-muted font-light">Fotorrealismo em segundos</p>
-        </div>
+    <!-- Seção 1: Cozinha Gourmet -->
+    <section class="py-16 px-6">
+      <div class="fade-in text-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Cozinha Gourmet</h2>
+        <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
       </div>
       <div class="fade-in">
-        <p class="text-center text-sm md:text-base text-apple-muted font-light leading-relaxed max-w-2xl mx-auto">Este projeto foi renderizado automaticamente por inteligência artificial. O agente Naia utilizou o modelo Gemini 3 Pro para transformar cada ambiente em uma visualização fotorrealista. O processo completo levou menos de 3 minutos.</p>
+        <div class="slider-container" data-slider>
+          <img src="original-01.jpg" alt="Projeto Cozinha" draggable="false">
+          <div class="slider-after"><img src="render-01-cozinha.png" alt="Render Cozinha" draggable="false"></div>
+          <div class="slider-line"></div>
+          <div class="slider-handle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
+          </div>
+          <span class="slider-label slider-label-before">Projeto</span>
+          <span class="slider-label slider-label-after">Render</span>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Seção 2: Sala de TV -->
+    <section class="py-16 px-6">
+      <div class="fade-in text-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Sala de TV</h2>
+        <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
+      </div>
+      <div class="fade-in">
+        <div class="slider-container" data-slider>
+          <img src="original-02.jpg" alt="Projeto Sala de TV" draggable="false">
+          <div class="slider-after"><img src="render-02-sala-tv.png" alt="Render Sala de TV" draggable="false"></div>
+          <div class="slider-line"></div>
+          <div class="slider-handle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
+          </div>
+          <span class="slider-label slider-label-before">Projeto</span>
+          <span class="slider-label slider-label-after">Render</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção 3: Sala de Jantar -->
+    <section class="py-16 px-6">
+      <div class="fade-in text-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Sala de Jantar</h2>
+        <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
+      </div>
+      <div class="fade-in">
+        <div class="slider-container" data-slider>
+          <img src="original-03.jpg" alt="Projeto Sala de Jantar" draggable="false">
+          <div class="slider-after"><img src="render-03-sala-jantar.png" alt="Render Sala de Jantar" draggable="false"></div>
+          <div class="slider-line"></div>
+          <div class="slider-handle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
+          </div>
+          <span class="slider-label slider-label-before">Projeto</span>
+          <span class="slider-label slider-label-after">Render</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Explicativa -->
+    <section class="py-20 px-6 bg-white">
+      <div class="max-w-4xl mx-auto">
+        <div class="fade-in text-center mb-14">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Como funciona</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+          <div class="fade-in text-center p-8">
+            <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
+              <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">Projeto SketchUp</h3>
+            <p class="text-sm text-apple-muted font-light">Upload das imagens</p>
+          </div>
+          <div class="fade-in text-center p-8" style="transition-delay:0.1s">
+            <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
+              <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">IA Gemini 3 Pro</h3>
+            <p class="text-sm text-apple-muted font-light">Renderização automática</p>
+          </div>
+          <div class="fade-in text-center p-8" style="transition-delay:0.2s">
+            <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
+              <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">Resultado</h3>
+            <p class="text-sm text-apple-muted font-light">Fotorrealismo em segundos</p>
+          </div>
+        </div>
+        <div class="fade-in">
+          <p class="text-center text-sm md:text-base text-apple-muted font-light leading-relaxed max-w-2xl mx-auto">Este projeto foi renderizado automaticamente por inteligência artificial. O agente Naia utilizou o modelo Gemini 3 Pro para transformar cada ambiente em uma visualização fotorrealista. O processo completo levou menos de 3 minutos.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- TAB 2: Projeto 2D -->
+  <div id="tab-projeto2d" class="tab-content">
+
+    <!-- Hero do Projeto 2D -->
+    <section class="py-16 px-6 text-center">
+      <div class="fade-in">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-[#1d1d1f]">Projeto Arquitetônico 2D</h2>
+        <p class="text-base md:text-lg font-light text-apple-muted mt-4 max-w-2xl mx-auto">Sobrado moderno estilo mini-mansão. Terreno 10×25m. Gerado inteiramente por IA.</p>
+      </div>
+
+      <!-- Tech Specs -->
+      <div class="fade-in mt-12">
+        <div class="tech-specs">
+          <div class="tech-spec">
+            <div class="value">250m²</div>
+            <div class="label">Terreno</div>
+          </div>
+          <div class="tech-spec">
+            <div class="value">~210m²</div>
+            <div class="label">Área construída</div>
+          </div>
+          <div class="tech-spec">
+            <div class="value">1:100</div>
+            <div class="label">Escala</div>
+          </div>
+          <div class="tech-spec">
+            <div class="value">10×25m</div>
+            <div class="label">Dimensões</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Planta Térreo -->
+    <section class="py-12 px-6">
+      <div class="fade-in">
+        <div class="blueprint-card">
+          <img src="planta-terreo.png" alt="Planta Baixa — Pavimento Térreo">
+          <div class="blueprint-info">
+            <h3>Pavimento Térreo</h3>
+            <ul>
+              <li>Garagem para 2 veículos (5.5m × 6m)</li>
+              <li>Hall de entrada com pé-direito duplo</li>
+              <li>Sala de estar integrada (5m × 4.5m)</li>
+              <li>Sala de jantar (4m × 3.5m)</li>
+              <li>Cozinha gourmet com ilha (4m × 3.5m)</li>
+              <li>Despensa</li>
+              <li>Lavabo</li>
+              <li>Área de serviço</li>
+              <li>Espaço gourmet com churrasqueira</li>
+              <li>Piscina com deck (2.5m × 5m)</li>
+              <li>Jardim de inverno</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Planta Superior -->
+    <section class="py-12 px-6">
+      <div class="fade-in">
+        <div class="blueprint-card">
+          <img src="planta-superior.png" alt="Planta Baixa — Pavimento Superior">
+          <div class="blueprint-info">
+            <h3>Pavimento Superior</h3>
+            <ul>
+              <li>Suíte master com closet e banheiro completo (5m × 4.5m)</li>
+              <li>Suíte 2 com banheiro (3.5m × 3.5m)</li>
+              <li>Suíte 3 com banheiro (3.5m × 3m)</li>
+              <li>Home office (3m × 2.5m)</li>
+              <li>Sacada na suíte master</li>
+              <li>Mezanino com vista para sala</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fachada Frontal -->
+    <section class="py-12 px-6">
+      <div class="fade-in">
+        <div class="blueprint-card">
+          <img src="fachada-frontal.png" alt="Fachada Frontal">
+          <div class="blueprint-info">
+            <h3>Fachada Frontal</h3>
+            <ul>
+              <li>Estilo contemporâneo moderno</li>
+              <li>Largura total: 10m</li>
+              <li>Altura: ~7.5m (dois pavimentos)</li>
+              <li>Revestimento em stucco branco e pedra cinza escuro</li>
+              <li>Painéis em ripas de madeira</li>
+              <li>Guarda-corpo em vidro na sacada</li>
+              <li>Telhado plano com platibanda</li>
+              <li>Iluminação LED de destaque</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="py-20 px-6 bg-white">
+      <div class="max-w-4xl mx-auto">
+        <div class="fade-in">
+          <p class="text-center text-sm md:text-base text-apple-muted font-light leading-relaxed max-w-2xl mx-auto">Este projeto arquitetônico foi gerado inteiramente por inteligência artificial utilizando o modelo Gemini 3 Pro. As plantas baixas e a fachada foram criadas automaticamente a partir de especificações técnicas, demonstrando o potencial da IA na fase inicial de projetos arquitetônicos.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
 
   <!-- Footer -->
   <footer class="py-12 px-6 text-center">
@@ -231,51 +479,83 @@
 
   <script>
     // Intersection Observer for fade-in
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    function initFadeIn() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
+    }
+    initFadeIn();
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    // Tab logic
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update buttons
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Update content
+        const tabId = 'tab-' + btn.dataset.tab;
+        document.querySelectorAll('.tab-content').forEach(c => {
+          c.classList.remove('active');
+        });
+        const target = document.getElementById(tabId);
+        // Small delay for transition
+        requestAnimationFrame(() => {
+          target.classList.add('active');
+          // Re-init fade-in for newly visible elements
+          initFadeIn();
+          // Re-init sliders if switching to render3d
+          if (btn.dataset.tab === 'render3d') {
+            initSliders();
+          }
+          // Scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+    });
 
     // Slider logic
-    document.querySelectorAll('[data-slider]').forEach(container => {
-      const afterDiv = container.querySelector('.slider-after');
-      const line = container.querySelector('.slider-line');
-      const handle = container.querySelector('.slider-handle');
-      let isDragging = false;
+    function initSliders() {
+      document.querySelectorAll('[data-slider]').forEach(container => {
+        if (container._sliderInit) return;
+        container._sliderInit = true;
 
-      function setPosition(x) {
-        const rect = container.getBoundingClientRect();
-        let pos = (x - rect.left) / rect.width;
-        pos = Math.max(0.01, Math.min(0.99, pos));
-        const pct = pos * 100 + '%';
-        afterDiv.style.width = pct;
-        line.style.left = pct;
-        handle.style.left = pct;
-      }
+        const afterDiv = container.querySelector('.slider-after');
+        const line = container.querySelector('.slider-line');
+        const handle = container.querySelector('.slider-handle');
+        let isDragging = false;
 
-      // Initialize at 50%
-      setPosition(0); // will be set after layout
-      requestAnimationFrame(() => {
-        const rect = container.getBoundingClientRect();
-        setPosition(rect.left + rect.width * 0.5);
+        function setPosition(x) {
+          const rect = container.getBoundingClientRect();
+          let pos = (x - rect.left) / rect.width;
+          pos = Math.max(0.01, Math.min(0.99, pos));
+          const pct = pos * 100 + '%';
+          afterDiv.style.width = pct;
+          line.style.left = pct;
+          handle.style.left = pct;
+        }
+
+        requestAnimationFrame(() => {
+          const rect = container.getBoundingClientRect();
+          setPosition(rect.left + rect.width * 0.5);
+        });
+
+        container.addEventListener('mousedown', (e) => { isDragging = true; setPosition(e.clientX); });
+        window.addEventListener('mousemove', (e) => { if (isDragging) { e.preventDefault(); setPosition(e.clientX); } });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        container.addEventListener('touchstart', (e) => { isDragging = true; setPosition(e.touches[0].clientX); }, { passive: true });
+        window.addEventListener('touchmove', (e) => { if (isDragging) { setPosition(e.touches[0].clientX); } }, { passive: true });
+        window.addEventListener('touchend', () => { isDragging = false; });
       });
-
-      // Mouse events
-      container.addEventListener('mousedown', (e) => { isDragging = true; setPosition(e.clientX); });
-      window.addEventListener('mousemove', (e) => { if (isDragging) { e.preventDefault(); setPosition(e.clientX); } });
-      window.addEventListener('mouseup', () => { isDragging = false; });
-
-      // Touch events
-      container.addEventListener('touchstart', (e) => { isDragging = true; setPosition(e.touches[0].clientX); }, { passive: true });
-      window.addEventListener('touchmove', (e) => { if (isDragging) { setPosition(e.touches[0].clientX); } }, { passive: true });
-      window.addEventListener('touchend', () => { isDragging = false; });
-    });
+    }
+    initSliders();
   </script>
 
 </body>
