@@ -4,235 +4,278 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Renderização 3D com Inteligência Artificial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    * { font-family: 'Inter', sans-serif; }
-    body { background: #0a0a0a; }
-    .gradient-text {
-      background: linear-gradient(135deg, #a855f7, #ec4899, #f97316);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'] },
+          colors: {
+            apple: { bg: '#f5f5f7', card: '#ffffff', muted: '#86868b', accent: '#0071e3' }
+          }
+        }
+      }
     }
-    .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(168, 85, 247, 0.15); }
-    .divider { width: 60px; height: 3px; background: linear-gradient(90deg, #a855f7, #ec4899); border-radius: 2px; }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
 
-    /* Comparison Slider */
-    .comparison-container {
+    /* Fade-in on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Slider */
+    .slider-container {
       position: relative;
-      width: 100%;
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
+      border-radius: 8px;
       overflow: hidden;
-      border-radius: 12px;
-      cursor: col-resize;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
       user-select: none;
       -webkit-user-select: none;
+      touch-action: none;
+      cursor: col-resize;
     }
-    .comparison-container > img {
-      width: 100%;
+    .slider-container img {
       display: block;
+      width: 100%;
+      height: auto;
     }
-    .comparison-overlay {
+    .slider-after {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       overflow: hidden;
     }
-    .comparison-overlay img {
-      display: block;
+    .slider-after img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    .comparison-slider {
+    .slider-line {
       position: absolute;
       top: 0;
-      left: 50%;
-      width: 4px;
+      width: 2px;
       height: 100%;
-      background: white;
-      cursor: col-resize;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(2px);
       z-index: 10;
+      pointer-events: none;
     }
-    .comparison-slider .handle {
+    .slider-handle {
       position: absolute;
       top: 50%;
-      left: 50%;
       transform: translate(-50%, -50%);
-      width: 44px;
-      height: 44px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: white;
+      background: rgba(255,255,255,0.95);
+      border: 1.5px solid rgba(0,0,0,0.12);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      z-index: 11;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
-    }
-    .comparison-slider .handle span {
-      font-size: 18px;
-      color: #333;
-      line-height: 1;
-    }
-    .comparison-label {
-      position: absolute;
-      top: 12px;
-      padding: 5px 14px;
-      border-radius: 8px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      z-index: 5;
       pointer-events: none;
     }
-    .comparison-label-left {
-      left: 12px;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      backdrop-filter: blur(8px);
+    .slider-handle svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.4;
     }
-    .comparison-label-right {
-      right: 12px;
-      background: rgba(168, 85, 247, 0.8);
-      color: white;
+    .slider-label {
+      position: absolute;
+      bottom: 16px;
+      z-index: 12;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      background: rgba(0,0,0,0.3);
       backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 4px;
+      pointer-events: none;
     }
+    .slider-label-before { left: 16px; }
+    .slider-label-after { right: 16px; }
   </style>
 </head>
-<body class="text-white min-h-screen">
+<body>
 
   <!-- Header -->
-  <header class="pt-20 pb-16 text-center px-4">
-    <div class="max-w-4xl mx-auto">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 mb-8">
-        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        Powered by Naia + Gemini 3 Pro
-      </div>
-      <h1 class="text-4xl md:text-6xl font-800 mb-6 leading-tight">
-        <span class="gradient-text">Renderização 3D</span><br>
-        <span class="text-white">com Inteligência Artificial</span>
-      </h1>
-      <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-        Projeto renderizado automaticamente pelo <strong class="text-gray-200">Gemini 3 Pro</strong> via agente <strong class="text-gray-200">Naia</strong>
-      </p>
+  <header class="text-center pt-20 pb-16 px-6">
+    <div class="fade-in">
+      <span class="inline-block text-[11px] font-semibold tracking-[0.08em] uppercase text-apple-muted border border-gray-300 rounded-full px-4 py-1.5 mb-6">Powered by AI</span>
+      <h1 class="text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight tracking-tight text-[#1d1d1f] max-w-3xl mx-auto">Renderização 3D com<br>Inteligência Artificial</h1>
+      <p class="text-lg md:text-xl font-light text-apple-muted mt-4 max-w-xl mx-auto">Transformação fotorrealista automatizada por IA</p>
     </div>
   </header>
 
-  <!-- Sections -->
-  <main class="max-w-7xl mx-auto px-4 pb-20 space-y-24">
-
-    <!-- Cozinha Gourmet -->
-    <section class="card-hover">
-      <h2 class="text-2xl font-700 mb-2 text-gray-100">01 — Cozinha Gourmet</h2>
-      <div class="divider mb-8"></div>
-      <div class="comparison-container">
-        <img src="render-01-cozinha.png" alt="Cozinha Gourmet - Renderização 3D">
-        <div class="comparison-overlay">
-          <img src="original-01.jpg" alt="Cozinha Gourmet - Projeto Original">
+  <!-- Seção 1: Cozinha Gourmet -->
+  <section class="py-16 px-6">
+    <div class="fade-in text-center mb-8">
+      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Cozinha Gourmet</h2>
+      <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
+    </div>
+    <div class="fade-in">
+      <div class="slider-container" data-slider>
+        <img src="original-01.jpg" alt="Projeto Cozinha" draggable="false">
+        <div class="slider-after"><img src="render-01-cozinha.png" alt="Render Cozinha" draggable="false"></div>
+        <div class="slider-line"></div>
+        <div class="slider-handle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
         </div>
-        <div class="comparison-slider">
-          <div class="handle"><span>⟷</span></div>
-        </div>
-        <div class="comparison-label comparison-label-left">ORIGINAL</div>
-        <div class="comparison-label comparison-label-right">RENDERIZAÇÃO 3D</div>
+        <span class="slider-label slider-label-before">Projeto</span>
+        <span class="slider-label slider-label-after">Render</span>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Sala de TV -->
-    <section class="card-hover">
-      <h2 class="text-2xl font-700 mb-2 text-gray-100">02 — Sala de TV</h2>
-      <div class="divider mb-8"></div>
-      <div class="comparison-container">
-        <img src="render-02-sala-tv.png" alt="Sala de TV - Renderização 3D">
-        <div class="comparison-overlay">
-          <img src="original-02.jpg" alt="Sala de TV - Projeto Original">
+  <!-- Seção 2: Sala de TV -->
+  <section class="py-16 px-6">
+    <div class="fade-in text-center mb-8">
+      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Sala de TV</h2>
+      <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
+    </div>
+    <div class="fade-in">
+      <div class="slider-container" data-slider>
+        <img src="original-02.jpg" alt="Projeto Sala de TV" draggable="false">
+        <div class="slider-after"><img src="render-02-sala-tv.png" alt="Render Sala de TV" draggable="false"></div>
+        <div class="slider-line"></div>
+        <div class="slider-handle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
         </div>
-        <div class="comparison-slider">
-          <div class="handle"><span>⟷</span></div>
-        </div>
-        <div class="comparison-label comparison-label-left">ORIGINAL</div>
-        <div class="comparison-label comparison-label-right">RENDERIZAÇÃO 3D</div>
+        <span class="slider-label slider-label-before">Projeto</span>
+        <span class="slider-label slider-label-after">Render</span>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Sala de Jantar -->
-    <section class="card-hover">
-      <h2 class="text-2xl font-700 mb-2 text-gray-100">03 — Sala de Jantar</h2>
-      <div class="divider mb-8"></div>
-      <div class="comparison-container">
-        <img src="render-03-sala-jantar.png" alt="Sala de Jantar - Renderização 3D">
-        <div class="comparison-overlay">
-          <img src="original-03.jpg" alt="Sala de Jantar - Projeto Original">
+  <!-- Seção 3: Sala de Jantar -->
+  <section class="py-16 px-6">
+    <div class="fade-in text-center mb-8">
+      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Sala de Jantar</h2>
+      <p class="text-sm text-apple-muted mt-2 font-light">Arraste para comparar o projeto com a renderização</p>
+    </div>
+    <div class="fade-in">
+      <div class="slider-container" data-slider>
+        <img src="original-03.jpg" alt="Projeto Sala de Jantar" draggable="false">
+        <div class="slider-after"><img src="render-03-sala-jantar.png" alt="Render Sala de Jantar" draggable="false"></div>
+        <div class="slider-line"></div>
+        <div class="slider-handle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
         </div>
-        <div class="comparison-slider">
-          <div class="handle"><span>⟷</span></div>
-        </div>
-        <div class="comparison-label comparison-label-left">ORIGINAL</div>
-        <div class="comparison-label comparison-label-right">RENDERIZAÇÃO 3D</div>
+        <span class="slider-label slider-label-before">Projeto</span>
+        <span class="slider-label slider-label-after">Render</span>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- About -->
-    <section class="max-w-3xl mx-auto text-center">
-      <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-10 md:p-14">
-        <h3 class="text-xl font-700 mb-6 text-gray-100">Como funciona?</h3>
-        <p class="text-gray-400 leading-relaxed text-base md:text-lg">
-          Este projeto foi renderizado automaticamente por inteligência artificial. O agente Naia recebeu as imagens do projeto em SketchUp e, utilizando o modelo Gemini 3 Pro (API de geração de imagens do Google), transformou cada ambiente em uma visualização fotorrealista. O processo completo levou menos de 3 minutos. Sem software de renderização, sem horas de configuração de luz e material. Apenas IA.
-        </p>
-        <div class="mt-8 inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20">
-          <svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"/></svg>
-          <span class="text-sm font-600 text-purple-300">Powered by Naia + Gemini 3 Pro</span>
+  <!-- Seção Explicativa -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in text-center mb-14">
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Como funciona</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+        <div class="fade-in text-center p-8">
+          <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
+            <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+          </div>
+          <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">Projeto SketchUp</h3>
+          <p class="text-sm text-apple-muted font-light">Upload das imagens</p>
+        </div>
+        <div class="fade-in text-center p-8" style="transition-delay:0.1s">
+          <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
+            <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">IA Gemini 3 Pro</h3>
+          <p class="text-sm text-apple-muted font-light">Renderização automática</p>
+        </div>
+        <div class="fade-in text-center p-8" style="transition-delay:0.2s">
+          <div class="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto mb-5">
+            <svg class="w-5 h-5 text-apple-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h3 class="text-base font-semibold text-[#1d1d1f] mb-1">Resultado</h3>
+          <p class="text-sm text-apple-muted font-light">Fotorrealismo em segundos</p>
         </div>
       </div>
-    </section>
-
-  </main>
+      <div class="fade-in">
+        <p class="text-center text-sm md:text-base text-apple-muted font-light leading-relaxed max-w-2xl mx-auto">Este projeto foi renderizado automaticamente por inteligência artificial. O agente Naia utilizou o modelo Gemini 3 Pro para transformar cada ambiente em uma visualização fotorrealista. O processo completo levou menos de 3 minutos.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="border-t border-white/[0.06] py-8 text-center">
-    <p class="text-gray-500 text-sm">&copy; 2026 Denderson Rodrigues</p>
+  <footer class="py-12 px-6 text-center">
+    <p class="text-xs text-apple-muted font-light">© 2026 Denderson Rodrigues</p>
+    <p class="text-xs text-apple-muted font-light mt-1 opacity-60">Naia + Gemini 3 Pro</p>
   </footer>
 
   <script>
-    // Update overlay images to match container width
-    function updateOverlayImages() {
-      document.querySelectorAll('.comparison-container').forEach(c => {
-        const img = c.querySelector('.comparison-overlay img');
-        if (img) img.style.width = c.offsetWidth + 'px';
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
       });
-    }
-    window.addEventListener('resize', updateOverlayImages);
-    window.addEventListener('load', updateOverlayImages);
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    // Slider drag logic
-    document.querySelectorAll('.comparison-container').forEach(container => {
-      const overlay = container.querySelector('.comparison-overlay');
-      const slider = container.querySelector('.comparison-slider');
-      let isDown = false;
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-      function move(x) {
+    // Slider logic
+    document.querySelectorAll('[data-slider]').forEach(container => {
+      const afterDiv = container.querySelector('.slider-after');
+      const line = container.querySelector('.slider-line');
+      const handle = container.querySelector('.slider-handle');
+      let isDragging = false;
+
+      function setPosition(x) {
         const rect = container.getBoundingClientRect();
         let pos = (x - rect.left) / rect.width;
-        pos = Math.max(0.05, Math.min(0.95, pos));
-        overlay.style.width = (pos * 100) + '%';
-        slider.style.left = (pos * 100) + '%';
+        pos = Math.max(0.01, Math.min(0.99, pos));
+        const pct = pos * 100 + '%';
+        afterDiv.style.width = pct;
+        line.style.left = pct;
+        handle.style.left = pct;
       }
 
-      container.addEventListener('mousedown', (e) => { isDown = true; move(e.clientX); });
-      document.addEventListener('mouseup', () => isDown = false);
-      container.addEventListener('mousemove', e => { if (isDown) move(e.clientX); });
+      // Initialize at 50%
+      setPosition(0); // will be set after layout
+      requestAnimationFrame(() => {
+        const rect = container.getBoundingClientRect();
+        setPosition(rect.left + rect.width * 0.5);
+      });
 
-      // Touch support
-      container.addEventListener('touchstart', (e) => { isDown = true; move(e.touches[0].clientX); }, { passive: true });
-      document.addEventListener('touchend', () => isDown = false);
-      container.addEventListener('touchmove', e => { if (isDown) move(e.touches[0].clientX); }, { passive: true });
+      // Mouse events
+      container.addEventListener('mousedown', (e) => { isDragging = true; setPosition(e.clientX); });
+      window.addEventListener('mousemove', (e) => { if (isDragging) { e.preventDefault(); setPosition(e.clientX); } });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      // Touch events
+      container.addEventListener('touchstart', (e) => { isDragging = true; setPosition(e.touches[0].clientX); }, { passive: true });
+      window.addEventListener('touchmove', (e) => { if (isDragging) { setPosition(e.touches[0].clientX); } }, { passive: true });
+      window.addEventListener('touchend', () => { isDragging = false; });
     });
-
-    // Initial call
-    updateOverlayImages();
   </script>
 
 </body>
