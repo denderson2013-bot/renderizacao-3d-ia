@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <created>2026-03-26</created>
+    <modified>2026-03-26</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="white-effect"><profile_COMMON><technique sid="common"><lambert><diffuse><color>0.9 0.9 0.9 1</color></diffuse></lambert></technique></profile_COMMON></effect>
+    <effect id="gray-effect"><profile_COMMON><technique sid="common"><lambert><diffuse><color>0.4 0.4 0.4 1</color></diffuse></lambert></technique></profile_COMMON></effect>
+    <effect id="wood-effect"><profile_COMMON><technique sid="common"><lambert><diffuse><color>0.6 0.4 0.2 1</color></diffuse></lambert></technique></profile_COMMON></effect>
+    <effect id="water-effect"><profile_COMMON><technique sid="common"><lambert><diffuse><color>0.2 0.6 0.8 1</color></diffuse></lambert></technique></profile_COMMON></effect>
+    <effect id="glass-effect"><profile_COMMON><technique sid="common"><lambert><diffuse><color>0.7 0.8 0.9 0.5</color></diffuse></lambert></technique></profile_COMMON></effect>
+  </library_effects>
+  <library_materials>
+    <material id="white-mat" name="White"><instance_effect url="#white-effect"/></material>
+    <material id="gray-mat" name="Gray"><instance_effect url="#gray-effect"/></material>
+    <material id="wood-mat" name="Wood"><instance_effect url="#wood-effect"/></material>
+    <material id="water-mat" name="Water"><instance_effect url="#water-effect"/></material>
+    <material id="glass-mat" name="Glass"><instance_effect url="#glass-effect"/></material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="wall-front" name="wall-front">
+      <mesh>
+        <source id="wall-front-pos"><float_array id="wall-front-pos-array" count="24">-5.0 -0.1 0 5.0 -0.1 0 5.0 0.1 0 -5.0 0.1 0 -5.0 -0.1 3 5.0 -0.1 3 5.0 0.1 3 -5.0 0.1 3</float_array>
+          <technique_common><accessor source="#wall-front-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="wall-front-vertices"><input semantic="POSITION" source="#wall-front-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#wall-front-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="wall-back" name="wall-back">
+      <mesh>
+        <source id="wall-back-pos"><float_array id="wall-back-pos-array" count="24">-5.0 -0.1 0 5.0 -0.1 0 5.0 0.1 0 -5.0 0.1 0 -5.0 -0.1 3 5.0 -0.1 3 5.0 0.1 3 -5.0 0.1 3</float_array>
+          <technique_common><accessor source="#wall-back-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="wall-back-vertices"><input semantic="POSITION" source="#wall-back-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#wall-back-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="wall-left" name="wall-left">
+      <mesh>
+        <source id="wall-left-pos"><float_array id="wall-left-pos-array" count="24">-0.1 -12.5 0 0.1 -12.5 0 0.1 12.5 0 -0.1 12.5 0 -0.1 -12.5 3 0.1 -12.5 3 0.1 12.5 3 -0.1 12.5 3</float_array>
+          <technique_common><accessor source="#wall-left-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="wall-left-vertices"><input semantic="POSITION" source="#wall-left-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#wall-left-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="wall-right" name="wall-right">
+      <mesh>
+        <source id="wall-right-pos"><float_array id="wall-right-pos-array" count="24">-0.1 -12.5 0 0.1 -12.5 0 0.1 12.5 0 -0.1 12.5 0 -0.1 -12.5 3 0.1 -12.5 3 0.1 12.5 3 -0.1 12.5 3</float_array>
+          <technique_common><accessor source="#wall-right-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="wall-right-vertices"><input semantic="POSITION" source="#wall-right-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#wall-right-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="wall2-front" name="wall2-front">
+      <mesh>
+        <source id="wall2-front-pos"><float_array id="wall2-front-pos-array" count="24">-5.0 -0.1 0 5.0 -0.1 0 5.0 0.1 0 -5.0 0.1 0 -5.0 -0.1 3 5.0 -0.1 3 5.0 0.1 3 -5.0 0.1 3</float_array>
+          <technique_common><accessor source="#wall2-front-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="wall2-front-vertices"><input semantic="POSITION" source="#wall2-front-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#wall2-front-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="wall2-back" name="wall2-back">
+      <mesh>
+        <source id="wall2-back-pos"><float_array id="wall2-back-pos-array" count="24">-5.0 -0.1 0 5.0 -0.1 0 5.0 0.1 0 -5.0 0.1 0 -5.0 -0.1 3 5.0 -0.1 3 5.0 0.1 3 -5.0 0.1 3</float_array>
+          <technique_common><accessor source="#wall2-back-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="wall2-back-vertices"><input semantic="POSITION" source="#wall2-back-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#wall2-back-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="wall2-left" name="wall2-left">
+      <mesh>
+        <source id="wall2-left-pos"><float_array id="wall2-left-pos-array" count="24">-0.1 -12.5 0 0.1 -12.5 0 0.1 12.5 0 -0.1 12.5 0 -0.1 -12.5 3 0.1 -12.5 3 0.1 12.5 3 -0.1 12.5 3</float_array>
+          <technique_common><accessor source="#wall2-left-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="wall2-left-vertices"><input semantic="POSITION" source="#wall2-left-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#wall2-left-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="wall2-right" name="wall2-right">
+      <mesh>
+        <source id="wall2-right-pos"><float_array id="wall2-right-pos-array" count="24">-0.1 -12.5 0 0.1 -12.5 0 0.1 12.5 0 -0.1 12.5 0 -0.1 -12.5 3 0.1 -12.5 3 0.1 12.5 3 -0.1 12.5 3</float_array>
+          <technique_common><accessor source="#wall2-right-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="wall2-right-vertices"><input semantic="POSITION" source="#wall2-right-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#wall2-right-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="slab-ground" name="slab-ground">
+      <mesh>
+        <source id="slab-ground-pos"><float_array id="slab-ground-pos-array" count="24">-5.0 -12.5 0 5.0 -12.5 0 5.0 12.5 0 -5.0 12.5 0 -5.0 -12.5 0.15 5.0 -12.5 0.15 5.0 12.5 0.15 -5.0 12.5 0.15</float_array>
+          <technique_common><accessor source="#slab-ground-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="slab-ground-vertices"><input semantic="POSITION" source="#slab-ground-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#slab-ground-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="slab-upper" name="slab-upper">
+      <mesh>
+        <source id="slab-upper-pos"><float_array id="slab-upper-pos-array" count="24">-5.0 -12.5 0 5.0 -12.5 0 5.0 12.5 0 -5.0 12.5 0 -5.0 -12.5 0.15 5.0 -12.5 0.15 5.0 12.5 0.15 -5.0 12.5 0.15</float_array>
+          <technique_common><accessor source="#slab-upper-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="slab-upper-vertices"><input semantic="POSITION" source="#slab-upper-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#slab-upper-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="slab-roof" name="slab-roof">
+      <mesh>
+        <source id="slab-roof-pos"><float_array id="slab-roof-pos-array" count="24">-5.0 -12.5 0 5.0 -12.5 0 5.0 12.5 0 -5.0 12.5 0 -5.0 -12.5 0.15 5.0 -12.5 0.15 5.0 12.5 0.15 -5.0 12.5 0.15</float_array>
+          <technique_common><accessor source="#slab-roof-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="slab-roof-vertices"><input semantic="POSITION" source="#slab-roof-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#slab-roof-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="pool" name="pool">
+      <mesh>
+        <source id="pool-pos"><float_array id="pool-pos-array" count="24">-1.25 -2.5 0 1.25 -2.5 0 1.25 2.5 0 -1.25 2.5 0 -1.25 -2.5 0.1 1.25 -2.5 0.1 1.25 2.5 0.1 -1.25 2.5 0.1</float_array>
+          <technique_common><accessor source="#pool-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="pool-vertices"><input semantic="POSITION" source="#pool-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#pool-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="island" name="island">
+      <mesh>
+        <source id="island-pos"><float_array id="island-pos-array" count="24">-1.0 -0.4 0 1.0 -0.4 0 1.0 0.4 0 -1.0 0.4 0 -1.0 -0.4 0.9 1.0 -0.4 0.9 1.0 0.4 0.9 -1.0 0.4 0.9</float_array>
+          <technique_common><accessor source="#island-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="island-vertices"><input semantic="POSITION" source="#island-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#island-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="stairs" name="stairs">
+      <mesh>
+        <source id="stairs-pos"><float_array id="stairs-pos-array" count="24">-0.6 -1.5 0 0.6 -1.5 0 0.6 1.5 0 -0.6 1.5 0 -0.6 -1.5 3 0.6 -1.5 3 0.6 1.5 3 -0.6 1.5 3</float_array>
+          <technique_common><accessor source="#stairs-pos-array" count="8" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common>
+        </source>
+        <vertices id="stairs-vertices"><input semantic="POSITION" source="#stairs-pos"/></vertices>
+        <triangles count="12" material="mat">
+          <input semantic="VERTEX" source="#stairs-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 5 6 4 6 7 0 1 5 0 5 4 2 3 7 2 7 6 0 3 7 0 7 4 1 2 6 1 6 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Sobrado-10x25">
+      <node id="wall-front" name="wall-front" type="NODE">
+        <translate>5 0.1 0</translate>
+        <instance_geometry url="#wall-front">
+          <bind_material><technique_common><instance_material symbol="mat" target="#white-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="wall-back" name="wall-back" type="NODE">
+        <translate>5 24.9 0</translate>
+        <instance_geometry url="#wall-back">
+          <bind_material><technique_common><instance_material symbol="mat" target="#white-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="wall-left" name="wall-left" type="NODE">
+        <translate>0.1 12.5 0</translate>
+        <instance_geometry url="#wall-left">
+          <bind_material><technique_common><instance_material symbol="mat" target="#white-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="wall-right" name="wall-right" type="NODE">
+        <translate>9.9 12.5 0</translate>
+        <instance_geometry url="#wall-right">
+          <bind_material><technique_common><instance_material symbol="mat" target="#white-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="wall2-front" name="wall2-front" type="NODE">
+        <translate>5 0.1 3.15</translate>
+        <instance_geometry url="#wall2-front">
+          <bind_material><technique_common><instance_material symbol="mat" target="#white-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="wall2-back" name="wall2-back" type="NODE">
+        <translate>5 24.9 3.15</translate>
+        <instance_geometry url="#wall2-back">
+          <bind_material><technique_common><instance_material symbol="mat" target="#white-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="wall2-left" name="wall2-left" type="NODE">
+        <translate>0.1 12.5 3.15</translate>
+        <instance_geometry url="#wall2-left">
+          <bind_material><technique_common><instance_material symbol="mat" target="#white-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="wall2-right" name="wall2-right" type="NODE">
+        <translate>9.9 12.5 3.15</translate>
+        <instance_geometry url="#wall2-right">
+          <bind_material><technique_common><instance_material symbol="mat" target="#white-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="slab-ground" name="slab-ground" type="NODE">
+        <translate>5 12.5 0</translate>
+        <instance_geometry url="#slab-ground">
+          <bind_material><technique_common><instance_material symbol="mat" target="#gray-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="slab-upper" name="slab-upper" type="NODE">
+        <translate>5 12.5 3</translate>
+        <instance_geometry url="#slab-upper">
+          <bind_material><technique_common><instance_material symbol="mat" target="#gray-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="slab-roof" name="slab-roof" type="NODE">
+        <translate>5 12.5 6.15</translate>
+        <instance_geometry url="#slab-roof">
+          <bind_material><technique_common><instance_material symbol="mat" target="#gray-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="pool" name="pool" type="NODE">
+        <translate>5 21 -0.5</translate>
+        <instance_geometry url="#pool">
+          <bind_material><technique_common><instance_material symbol="mat" target="#water-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="island" name="island" type="NODE">
+        <translate>6 10 0.15</translate>
+        <instance_geometry url="#island">
+          <bind_material><technique_common><instance_material symbol="mat" target="#gray-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+      <node id="stairs" name="stairs" type="NODE">
+        <translate>2 14 0.15</translate>
+        <instance_geometry url="#stairs">
+          <bind_material><technique_common><instance_material symbol="mat" target="#wood-mat"/></technique_common></bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene><instance_visual_scene url="#Scene"/></scene>
+</COLLADA>
